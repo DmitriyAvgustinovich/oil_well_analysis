@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../utils/db/prisma.service'; // Сервис Prisma
+import { Well } from './entities/well.entity';
 
 @Injectable()
 export class WellsService {
@@ -107,12 +108,10 @@ export class WellsService {
    * @returns {Promise<number>} The total debit for the specified well over the given period.
    */
   async getTotalDebitByWell(startDate: Date, endDate: Date, wellId: number) {
+    const whereCondition: any = { well: wellId };
     const result = await this.prisma.well_day_histories.aggregate({
       _sum: { debit: true },
-      where: {
-        date_fact: { gte: startDate, lte: endDate },
-        well: wellId,
-      },
+      where: await WellsService.mixInWhereClause(whereCondition, startDate, endDate),
     });
     return result._sum.debit || 0;
   }
@@ -128,19 +127,12 @@ export class WellsService {
   async getDailyDebit(wellId: number, startDate?: Date, endDate?: Date) {
     const whereCondition: any = { well: wellId };
 
-    if (startDate || endDate) {
-      whereCondition.date_fact = {
-        ...(startDate && { gte: startDate }),
-        ...(endDate && { lte: endDate }),
-      };
-    }
-
     const result = await this.prisma.well_day_histories.findMany({
       select: {
         date_fact: true,
         debit: true,
       },
-      where: whereCondition,
+      where: await WellsService.mixInWhereClause(whereCondition, startDate, endDate),
     });
 
     return result;
@@ -152,12 +144,22 @@ export class WellsService {
    * @param {number} wellId - The ID of the well for which to generate the report.
    * @returns {Promise<object[]>} An array of records containing the daily report data for the specified well.
    */
-  async getDailyReport(wellId: number) {
+  async getDailyReport(wellId: number, startDate?: Date, endDate?: Date) {
+    const whereCondition: any = { well: wellId };
     const result = await this.prisma.well_day_histories.findMany({
-      where: {
-        well: wellId,
-      },
+      where: await WellsService.mixInWhereClause(whereCondition, startDate, endDate),
     });
     return result;
+  }
+
+  static async mixInWhereClause(object: any, startDate?: Date, endDate?: Date) {
+    if (startDate || endDate) {
+      object.date_fact = {
+        ...(startDate && { gte: startDate }),
+        ...(endDate && { lte: endDate }),
+      };
+    }
+
+    return object;
   }
 }
