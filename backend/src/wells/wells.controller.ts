@@ -17,48 +17,83 @@ import { ApiTags } from '@nestjs/swagger';
 export class WellsController {
   constructor(private readonly wellsService: WellsService) {}
 
-  // 1. Создание записи о скважине
   @Post()
+  /**
+   * Create a new well
+   * @param createWellDto - data of the well to create
+   * @returns created well
+   */
   create(@Body() createWellDto: CreateWellDto) {
     return this.wellsService.create(createWellDto);
   }
 
-  // 2. Получение всех скважин
   @Get()
+  /**
+   * Retrieve all wells
+   * @returns an array of all wells
+   */
   findAll() {
     return this.wellsService.findAll();
   }
 
-  // 3. Получение информации о конкретной скважине
   @Get(':well')
+  /**
+   * Retrieve a well by its ID
+   * @param well - the ID of the well to retrieve
+   * @returns the well with the given ID
+   */
   findOne(@Param('well') well: number) {
     return this.wellsService.findOne(+well);
   }
 
-  // 4. Обновление данных о скважине
   @Patch(':well')
+  /**
+   * Update a well
+   * @param well - the ID of the well to update
+   * @param updateWellDto - the new data for the well
+   * @returns the updated well
+   */
   update(@Param('well') well: number, @Body() updateWellDto: UpdateWellDto) {
     return this.wellsService.update(+well, updateWellDto);
   }
 
-  // 6. Топ-10 самых производительных или энергозатратных скважин
   @Get('top/:type')
+  /**
+   * Retrieves the top 10 wells by debit or energy consumption.
+   * @param type - The type of sorting (debit or energy consumption).
+   * @returns An array of the top 10 wells.
+   */
   getTopWells(@Param('type') type: 'debit' | 'ee_consume') {
     return this.wellsService.getTopWells(type);
   }
 
   @Get('daily-report/:well')
+  /**
+   * Retrieves the daily report for a specific well.
+   * @param well - The ID of the well for which to generate the report.
+   * @returns An array of records containing the daily report data for the specified well.
+   */
   getDailyReport(@Param('well') well: number) {
     return this.wellsService.getDailyReport(+well);
   }
-  // 7. Подсчёт записей по скважинам
+
   @Get('counts')
+  /**
+   * Retrieves the count of records for each well.
+   * @returns An object with the well IDs as keys and a count of records for each well as value.
+   */
   getWellCounts() {
     return this.wellsService.getWellCounts();
   }
 
-  // 8. Суммарный объём добытой нефти за период для конкретной скважины
   @Get('debit/total/:well')
+  /**
+   * Retrieves the total debit for the specified well over the given period.
+   * @param well - The ID of the well.
+   * @param startDate - The start date of the period.
+   * @param endDate - The end date of the period.
+   * @returns The total debit for the specified well over the given period.
+   */
   getTotalDebit(
     @Param('well') well: number,
     @Query('startDate') startDate: string,
@@ -72,6 +107,13 @@ export class WellsController {
   }
 
   @Get('debit/daily/:well')
+  /**
+   * Retrieves the daily debit for the specified well over the given period.
+   * @param well - The ID of the well.
+   * @param startDate - The start date of the period.
+   * @param endDate - The end date of the period.
+   * @returns An array of objects with the date and debit for each day.
+   */
   getDailyDebit(
     @Param('well') well: number,
     @Query('startDate') startDate?: string,
