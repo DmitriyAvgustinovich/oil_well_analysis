@@ -10,7 +10,9 @@ import {
 import { WellsService } from './wells.service';
 import { CreateWellDto } from './dto/create-well.dto';
 import { UpdateWellDto } from './dto/update-well.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('wells')
 @Controller('wells')
 export class WellsController {
   constructor(private readonly wellsService: WellsService) {}
