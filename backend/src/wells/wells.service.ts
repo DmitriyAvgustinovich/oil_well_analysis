@@ -1,14 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../utils/db/prisma.service'; // Сервис Prisma
-import { CreateWellDto } from './dto/create-well.dto';
-import { UpdateWellDto } from './dto/update-well.dto';
 
 @Injectable()
 export class WellsService {
   constructor(private readonly prisma: PrismaService) {}
 
   // 1. Создание новой записи о скважине
-  create(createWellDto: CreateWellDto) {
+  create(createWellDto) {
     return this.prisma.well.create({ data: createWellDto });
   }
 
@@ -18,21 +16,16 @@ export class WellsService {
   }
 
   // 3. Получение информации о скважине по ID
-  findOne(id: number) {
-    return this.prisma.well.findUnique({ where: { id } });
+  findOne(well: number) {
+    return this.prisma.well.findUnique({ where: { well } });
   }
 
   // 4. Обновление данных о скважине
-  update(id: number, updateWellDto: UpdateWellDto) {
+  update(well: number, updateWellDto) {
     return this.prisma.well.update({
-      where: { id },
+      where: { well },
       data: updateWellDto,
     });
-  }
-
-  // 5. Удаление скважины
-  remove(id: number) {
-    return this.prisma.well.delete({ where: { id } });
   }
 
   // 6. Топ-10 самых производительных или энергозатратных скважин

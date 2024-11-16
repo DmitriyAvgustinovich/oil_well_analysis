@@ -1,5 +1,4 @@
-import { Button } from "antd";
-import { Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 import { RouterPath } from "configs/route-config";
 
@@ -11,7 +10,7 @@ export const NotAuthorized = () => {
   const { authUserData, isUserDataLoading } = useGetAuthUser();
 
   if (!isUserDataLoading && authUserData) {
-    return <Navigate to={RouterPath.main} />;
+    return <Navigate to={RouterPath.wells} />;
   }
 
   return (
@@ -22,16 +21,7 @@ export const NotAuthorized = () => {
         Пожалуйста, пройдите авторизацию, нажав на кнопку "Войти" в левой части
         экрана.
         <br />
-        Или вернитесь на главную страницу.
       </p>
-
-      <Button
-        className={styles.backToMainPageButton}
-        type="primary"
-        size="large"
-      >
-        <Link to={RouterPath.main}>Вернуться на главную страницу</Link>
-      </Button>
     </div>
   );
 };

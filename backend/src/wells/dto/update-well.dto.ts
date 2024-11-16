@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsISO8601, IsNotEmpty, IsString, IsInt } from 'class-validator';
+import { IsNumber, IsISO8601, IsNotEmpty, IsInt } from 'class-validator';
 
-export class CreateWellDto {
+export class UpdateWellDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
@@ -20,20 +20,20 @@ export class CreateWellDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
-  ee_consume: number
+  ee_consume: number;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
-  expenses: number
+  expenses: number;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
-  pump_operating: number
+  pump_operating: number;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsInt()
-  well: number
+  well: number;
 }

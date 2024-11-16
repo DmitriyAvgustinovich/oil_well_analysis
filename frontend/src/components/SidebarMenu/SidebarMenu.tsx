@@ -3,6 +3,7 @@ import { useContexts, useGetAuthUser } from "hooks";
 import { Link } from "react-router-dom";
 
 import {
+  ControlOutlined,
   DashboardOutlined,
   LoginOutlined,
   LogoutOutlined,
@@ -41,7 +42,7 @@ export const SidebarMenu = () => {
   const menuItems = [
     {
       key: 0,
-      label: <Link to={RouterPath.main}>Главная</Link>,
+      label: <Link to={RouterPath.wells}>Скважины</Link>,
       icon: <DashboardOutlined />,
     },
     {
@@ -51,6 +52,11 @@ export const SidebarMenu = () => {
     },
     {
       key: 2,
+      label: <Link to={RouterPath.wells_analytics}>Аналитика по скважинам</Link>,
+      icon: <ControlOutlined />,
+    },
+    {
+      key: 3,
       label: authUserData ? (
         <Typography.Text>Выйти</Typography.Text>
       ) : (

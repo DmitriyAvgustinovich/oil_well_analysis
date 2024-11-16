@@ -5,7 +5,6 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
   Query,
 } from '@nestjs/common';
 import { WellsService } from './wells.service';
@@ -29,21 +28,15 @@ export class WellsController {
   }
 
   // 3. Получение информации о конкретной скважине
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.wellsService.findOne(+id);
+  @Get(':well')
+  findOne(@Param('well') well: number) {
+    return this.wellsService.findOne(+well);
   }
 
   // 4. Обновление данных о скважине
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateWellDto: UpdateWellDto) {
-    return this.wellsService.update(+id, updateWellDto);
-  }
-
-  // 5. Удаление записи о скважине
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.wellsService.remove(+id);
+  @Patch(':well')
+  update(@Param('well') well: number, @Body() updateWellDto: UpdateWellDto) {
+    return this.wellsService.update(+well, updateWellDto);
   }
 
   // 6. Топ-10 самых производительных или энергозатратных скважин
@@ -63,12 +56,12 @@ export class WellsController {
   getTotalDebit(
     @Query('startDate') startDate: string,
     @Query('endDate') endDate: string,
-    @Query('wellId') wellId: string,
+    @Query('well') well: string,
   ) {
     return this.wellsService.getTotalDebitByWell(
       new Date(startDate),
       new Date(endDate),
-      +wellId,
+      +well,
     );
   }
 }

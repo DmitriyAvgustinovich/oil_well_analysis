@@ -10,12 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@pbe/react-yandex-maps": "^1.2.5",
     "@types/react-router-dom": "^5.3.3",
     "body-parser": "^1.20.2",
+    "chart.js": "^4.4.6",
     "esbuild-runner": "^2.2.2",
     "json-server": "^0.17.4",
     "multer": "^1.4.5-lts.1",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-markdown": "^9.0.1",
     "react-router-dom": "^6.22.3",

@@ -2,8 +2,9 @@ import { RouteProps } from "react-router-dom";
 
 import { AccountPage } from "pages/AccountPage";
 import { ForbiddenPage } from "pages/ForbiddenPage";
-import { MainPage } from "pages/MainPage";
 import { NotAuthorizedPage } from "pages/NotAuthorizedPage";
+import WellsAnalyticsPage from "pages/WellsAnalyticsPage/WellsAnalytics";
+import { WellsPage } from "pages/WellsPage";
 
 import { LazyLoadChunk } from "components/LazyLoadChunk/LazyLoadChunk";
 
@@ -14,27 +15,30 @@ export type TAppRouteProps = RouteProps & {
 };
 
 export enum AppRoutes {
-  MAIN = "main",
+  WELLS = "wells",
   ACCOUNT = "account",
   FORBIDDEN = "forbidden",
   NOT_AUTHORIZED = "not_authorized",
+  WELLS_ANALYTICS = "wells_analytics",
 }
 
 export const RouterPath: Record<AppRoutes, string> = {
-  [AppRoutes.MAIN]: "/",
+  [AppRoutes.WELLS]: "/",
   [AppRoutes.ACCOUNT]: "/account",
   [AppRoutes.FORBIDDEN]: "/forbidden",
   [AppRoutes.NOT_AUTHORIZED]: "/not_authorized",
+  [AppRoutes.WELLS_ANALYTICS]: "/wells_analytics",
 };
 
 export const routeConfig: Record<AppRoutes, TAppRouteProps> = {
-  [AppRoutes.MAIN]: {
-    path: RouterPath.main,
+  [AppRoutes.WELLS]: {
+    path: RouterPath.wells,
     element: (
       <LazyLoadChunk>
-        <MainPage />
+        <WellsPage />
       </LazyLoadChunk>
     ),
+    authOnly: true,
   },
   [AppRoutes.ACCOUNT]: {
     path: RouterPath.account,
@@ -61,5 +65,14 @@ export const routeConfig: Record<AppRoutes, TAppRouteProps> = {
         <NotAuthorizedPage />
       </LazyLoadChunk>
     ),
+  },
+  [AppRoutes.WELLS_ANALYTICS]: {
+    path: RouterPath.wells_analytics,
+    element: (
+      <LazyLoadChunk>
+        <WellsAnalyticsPage />
+      </LazyLoadChunk>
+    ),
+    authOnly: true,
   },
 };

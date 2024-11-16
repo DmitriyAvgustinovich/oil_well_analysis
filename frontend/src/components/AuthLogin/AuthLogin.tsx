@@ -35,7 +35,7 @@ export const AuthLogin = () => {
     setIsAuthModalOpen(false);
 
     setTimeout(() => {
-      navigate(RouterPath.main);
+      navigate(RouterPath.wells);
     }, 1000);
   };
 
