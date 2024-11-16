@@ -47,6 +47,10 @@ export class WellsController {
     return this.wellsService.getTopWells(type);
   }
 
+  @Get('daily-report/:well')
+  getDailyReport(@Param('well') well: number) {
+    return this.wellsService.getDailyReport(+well);
+  }
   // 7. Подсчёт записей по скважинам
   @Get('counts')
   getWellCounts() {
@@ -68,7 +72,11 @@ export class WellsController {
   }
 
   @Get('debit/daily/:well')
-  getDailyDebit(@Param('well') well: number) {
-    return this.wellsService.getDailyDebit(+well);
+  getDailyDebit(
+    @Param('well') well: number,
+    @Query('startDate') startDate?: Date,
+    @Query('endDate') endDate?: Date,
+  ) {
+    return this.wellsService.getDailyDebit(+well, startDate, endDate);
   }
 }

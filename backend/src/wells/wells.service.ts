@@ -61,12 +61,29 @@ export class WellsService {
     return result._sum.debit || 0;
   }
 
-  async getDailyDebit(wellId: number) {
+  async getDailyDebit(wellId: number, startDate?: Date, endDate?: Date) {
+    const whereCondition: any = { well: wellId };
+
+    if (startDate || endDate) {
+      whereCondition.date_fact = {
+        ...(startDate && { gte: startDate }),
+        ...(endDate && { lte: endDate }),
+      };
+    }
+
     const result = await this.prisma.well_day_histories.findMany({
       select: {
         date_fact: true,
         debit: true,
       },
+      where: whereCondition,
+    });
+
+    return result;
+  }
+
+  async getDailyReport(wellId: number) {
+    const result = await this.prisma.well_day_histories.findMany({
       where: {
         well: wellId,
       },
