@@ -60,4 +60,17 @@ export class WellsService {
     });
     return result._sum.debit || 0;
   }
+
+  async getDailyDebit(wellId: number) {
+    const result = await this.prisma.well_day_histories.findMany({
+      select: {
+        date_fact: true,
+        debit: true,
+      },
+      where: {
+        well: wellId,
+      },
+    });
+    return result;
+  }
 }

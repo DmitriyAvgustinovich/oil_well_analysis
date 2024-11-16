@@ -54,16 +54,21 @@ export class WellsController {
   }
 
   // 8. Суммарный объём добытой нефти за период для конкретной скважины
-  @Get('debit/total')
+  @Get('debit/total/:well')
   getTotalDebit(
+    @Param('well') well: number,
     @Query('startDate') startDate: string,
     @Query('endDate') endDate: string,
-    @Query('well') well: string,
   ) {
     return this.wellsService.getTotalDebitByWell(
       new Date(startDate),
       new Date(endDate),
       +well,
     );
+  }
+
+  @Get('debit/daily/:well')
+  getDailyDebit(@Param('well') well: number) {
+    return this.wellsService.getDailyDebit(+well);
   }
 }
