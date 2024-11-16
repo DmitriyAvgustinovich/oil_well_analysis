@@ -74,9 +74,16 @@ export class WellsController {
   @Get('debit/daily/:well')
   getDailyDebit(
     @Param('well') well: number,
-    @Query('startDate') startDate?: Date,
-    @Query('endDate') endDate?: Date,
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
   ) {
-    return this.wellsService.getDailyDebit(+well, startDate, endDate);
+    const parsedStartDate = startDate ? new Date(startDate) : undefined;
+    const parsedEndDate = endDate ? new Date(endDate) : undefined;
+
+    return this.wellsService.getDailyDebit(
+      +well,
+      parsedStartDate,
+      parsedEndDate,
+    );
   }
 }
