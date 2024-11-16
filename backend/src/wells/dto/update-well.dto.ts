@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsISO8601, IsNotEmpty, IsInt } from 'class-validator';
+import { IsNumber, IsNotEmpty, IsInt, IsDate } from 'class-validator';
 
 export class UpdateWellDto {
   @ApiProperty()
@@ -9,7 +9,7 @@ export class UpdateWellDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsISO8601()
+  @IsDate()
   date_fact: string;
 
   @ApiProperty()

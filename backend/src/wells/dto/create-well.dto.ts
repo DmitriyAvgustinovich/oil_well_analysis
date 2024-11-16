@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsISO8601, IsNotEmpty, IsInt } from 'class-validator';
+import { IsNumber, IsNotEmpty, IsInt, IsDate } from 'class-validator';
 
 export class CreateWellDto {
   @ApiProperty()
@@ -9,8 +9,8 @@ export class CreateWellDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsISO8601()
-  date_fact: string;
+  @IsDate()
+  date_fact: Date;
 
   @ApiProperty()
   @IsNotEmpty()

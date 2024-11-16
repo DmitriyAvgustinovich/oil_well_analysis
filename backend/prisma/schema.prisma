@@ -59,7 +59,7 @@ model well {
 
 model well_day_histories {
   related_well   well     @relation(fields: [well], references: [well])
-  date_fact      DateTime
+  date_fact      DateTime @db.Date
   debit          Float
   ee_consume     Float
   expenses       Float
@@ -72,7 +72,7 @@ model well_day_histories {
 model well_day_plans {
   related_well   well     @relation(fields: [well], references: [well])
   well           Int
-  date_fact      DateTime
+  date_fact      DateTime @db.Date
   debit          Float
   ee_consume     Float
   expenses       Float
