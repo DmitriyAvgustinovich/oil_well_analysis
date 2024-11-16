@@ -58,11 +58,6 @@ export class WellsController {
   }
 
   @Get('top/:type')
-  /**
-   * Retrieves the top 10 wells by debit or energy consumption.
-   * @param type - The type of sorting (debit or energy consumption).
-   * @returns An array of the top 10 wells.
-   */
   getTopWells(
     @Param('type')
     type:
