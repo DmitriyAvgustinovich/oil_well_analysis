@@ -64,11 +64,10 @@ export class WellsService {
       take: 10,
     });
 
-    return result.map((item) => ({ well: item.well, [type]: item._sum[type] }));
+    return result.map((item) => ({ well: item.well, value: item._sum[type] }));
   }
 
   async getSpecificDebit(
-    wellId: number,
     type: 'specific-debit-ee-consume' | 'specific-debit-expenses'
   ) {
     const result = await this.prisma.well_day_histories.groupBy({
