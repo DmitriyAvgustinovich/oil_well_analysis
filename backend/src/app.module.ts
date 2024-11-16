@@ -7,6 +7,7 @@ import { PasswordService } from './utils/password/password.service';
 import { CookieService } from './utils/cookie/cookie.service';
 import { JwtService } from '@nestjs/jwt';
 import { ImagesModule } from './images/images.module';
+import { WellsModule } from './wells/wells.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ImagesModule } from './images/images.module';
     UsersModule,
     AuthModule,
     ImagesModule,
+    WellsModule,
   ],
   controllers: [],
   providers: [PrismaService, PasswordService, CookieService, JwtService],
