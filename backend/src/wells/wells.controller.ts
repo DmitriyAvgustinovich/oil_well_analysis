@@ -63,7 +63,20 @@ export class WellsController {
    * @param type - The type of sorting (debit or energy consumption).
    * @returns An array of the top 10 wells.
    */
-  getTopWells(@Param('type') type: 'debit' | 'ee_consume') {
+  getTopWells(
+    @Param('type')
+    type:
+      | 'debit'
+      | 'ee_consume'
+      | 'specific-debit-ee-consume'
+      | 'specific-debit-expenses',
+  ) {
+    if (
+      type === 'specific-debit-ee-consume' ||
+      type === 'specific-debit-expenses'
+    ) {
+      return this.wellsService.getSpecificDebit(type);
+    }
     return this.wellsService.getTopWells(type);
   }
 
