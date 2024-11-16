@@ -62,7 +62,7 @@ model well_day_histories {
   date_fact      DateTime
   debit          Float
   ee_consume     Float
-  expences       Float
+  expenses       Float
   pump_operating Float
   well           Int
 
@@ -75,7 +75,7 @@ model well_day_plans {
   date_fact      DateTime
   debit          Float
   ee_consume     Float
-  expences       Float
+  expenses       Float
   pump_operating Float
 
   @@id([well, date_fact])
