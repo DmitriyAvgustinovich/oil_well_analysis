@@ -152,7 +152,7 @@ export class WellsService {
     const obj = {
       where: await WellsService.mixInWhereClause(whereCondition, startDate, endDate),
     };
-    const result = await this.prisma.well_day_histories.findMany();
+    const result = await this.prisma.well_day_histories.findMany(obj);
     this.logger.log(obj);
     this.logger.log(startDate, endDate);
     return result;
