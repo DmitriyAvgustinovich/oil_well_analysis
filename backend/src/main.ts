@@ -22,7 +22,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
 
-  await app.listen(port, () => {
+  await app.listen(3000, () => {
     console.log(`Application is running on: http://localhost:${port}`);
   });
 }

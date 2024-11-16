@@ -29,11 +29,8 @@ export class UsersController {
 
   @Get()
   @UseGuards(AdminGuard)
-  async findAll(
-    @Query('page') page: number = 1,
-    @Query('limit', ParseIntPipe) limit: number = 16,
-  ) {
-    return this.usersService.findAll(page, limit);
+  async findAll() {
+    return this.usersService.findAll();
   }
 
   @Get(':id')
