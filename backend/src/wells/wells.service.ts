@@ -67,6 +67,23 @@ export class WellsService {
     return result.map((item) => ({ well: item.well, [type]: item._sum[type] }));
   }
 
+  async getSpecificDebit(
+    wellId: number,
+    type: 'specific-debit-ee-consume' | 'specific-debit-expenses'
+  ) {
+    const result = await this.prisma.well_day_histories.groupBy({
+      by: ['well'],
+      _sum: {
+        debit: true, 
+        [type.slice(14).replace('-', '_')]: true 
+      }
+    })
+    return result.map((item) => ({
+        well: item.well,
+        value: item._sum.debit / item._sum[type.slice(14).replace('-', '_')] 
+      }
+    ));
+  }
   /**
    * Retrieves the count of records for each well.
    *
