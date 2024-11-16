@@ -70,16 +70,17 @@ export class WellsService {
   async getSpecificDebit(
     type: 'specific-debit-ee-consume' | 'specific-debit-expenses',
   ) {
+    const field = type.slice(15).replace('-', '_');
     const result = await this.prisma.well_day_histories.groupBy({
       by: ['well'],
       _sum: {
         debit: true,
-        [type.slice(15).replace('-', '_')]: true,
+        [field]: true,
       },
     });
     return result.map((item) => ({
       well: item.well,
-      value: item._sum.debit / item._sum[type.slice(15).replace('-', '_')],
+      value: item._sum.debit / item._sum[field],
     }));
   }
   /**
