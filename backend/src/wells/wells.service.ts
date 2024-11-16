@@ -64,7 +64,7 @@ export class WellsService {
       take: 10,
     });
 
-    return result.map((item) => ({ well: item.well, total: item._sum[type] }));
+    return result.map((item) => ({ well: item.well, [type]: item._sum[type] }));
   }
 
   /**
