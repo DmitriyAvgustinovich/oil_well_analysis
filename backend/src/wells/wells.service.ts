@@ -55,15 +55,16 @@ export class WellsService {
    * @returns {Promise<object[]>} An array of the top 10 wells.
    */
   async getTopWells(type: 'debit' | 'ee_consume') {
-    return this.prisma.well_day_histories.findMany({
-      orderBy: { [type]: 'desc' },
-      take: 10,
-      select: {
-        well: true,
-        date_fact: true,
-        [type]: true,
+    const result = await this.prisma.well_day_histories.groupBy({
+      by: ['well'],
+      _sum: { [type]: true },
+      orderBy: {
+        _sum: { [type]: 'desc' },
       },
+      take: 10,
     });
+
+    return result.map((item) => ({ well: item.well, total: item._sum[type] }));
   }
 
   /**
