@@ -13,14 +13,70 @@ enum Role {
 }
 
 model users {
-  id        Int    @id @default(autoincrement())
-  email     String @unique
+  id        Int     @id @default(autoincrement())
+  email     String  @unique
   hash      String
   salt      String
   surname   String
   name      String
   lastname  String
   avatarUrl String?
-  role      Role   @default(user)
+  role      Role    @default(user)
 }
 
+model objects {
+  id          Int          @id @default(autoincrement())
+  name        String       @db.VarChar(42)
+  object_type objects_type @relation(fields: [type], references: [id])
+  type        Int
+  well_well_  well[]       @relation("related_well_")
+  well_ngdu_  well[]       @relation("assigned_ngdu_")
+  well_cdng_  well[]       @relation("assigned_cdng_")
+  well_kust_  well[]       @relation("assigned_kust_")
+  well_mest_  well[]       @relation("assigned_mest_")
+}
+
+model objects_type {
+  id      Int       @id @default(autoincrement())
+  name    String    @db.VarChar(42)
+  objects objects[]
+}
+
+model well {
+  related_well       objects              @relation("related_well_", fields: [well], references: [id])
+  well               Int                  @id
+  assigned_ngdu      objects              @relation("assigned_ngdu_", fields: [ngdu], references: [id])
+  assigned_cdng      objects              @relation("assigned_cdng_", fields: [cdng], references: [id])
+  assigned_kust      objects              @relation("assigned_kust_", fields: [kust], references: [id])
+  assigned_mest      objects              @relation("assigned_mest_", fields: [mest], references: [id])
+  ngdu               Int
+  cdng               Int
+  kust               Int
+  mest               Int
+  well_day_histories well_day_histories[]
+  well_day_plans     well_day_plans[]
+}
+
+model well_day_histories {
+  related_well   well     @relation(fields: [well], references: [well])
+  date_fact      DateTime
+  debit          Float
+  ee_consume     Float
+  expences       Float
+  pump_operating Float
+  well           Int
+
+  @@id([well, date_fact])
+}
+
+model well_day_plans {
+  related_well   well     @relation(fields: [well], references: [well])
+  well           Int
+  date_fact      DateTime
+  debit          Float
+  ee_consume     Float
+  expences       Float
+  pump_operating Float
+
+  @@id([well, date_fact])
+}
