@@ -93,5 +93,6 @@ model notifications {
   type    notification_type
   text    String
   well    well              @relation(fields: [well_id], references: [well])
+  is_read Boolean
   well_id Int
 }
