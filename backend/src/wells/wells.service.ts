@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from '../utils/db/prisma.service'; // Сервис Prisma
 import { Well } from './entities/well.entity';
 
 @Injectable()
 export class WellsService {
+  private readonly logger = new Logger('TEST');
   constructor(private readonly prisma: PrismaService) {}
 
   /**
@@ -109,10 +110,12 @@ export class WellsService {
    */
   async getTotalDebitByWell(startDate: Date, endDate: Date, wellId: number) {
     const whereCondition: any = { well: wellId };
-    const result = await this.prisma.well_day_histories.aggregate({
+    const obj = {
       _sum: { debit: true },
       where: await WellsService.mixInWhereClause(whereCondition, startDate, endDate),
-    });
+    }
+    const result = await this.prisma.well_day_histories.aggregate(obj as any);
+    this.logger.log(result);
     return result._sum.debit || 0;
   }
 
@@ -146,9 +149,12 @@ export class WellsService {
    */
   async getDailyReport(wellId: number, startDate?: Date, endDate?: Date) {
     const whereCondition: any = { well: wellId };
-    const result = await this.prisma.well_day_histories.findMany({
+    const obj = {
       where: await WellsService.mixInWhereClause(whereCondition, startDate, endDate),
-    });
+    };
+    const result = await this.prisma.well_day_histories.findMany();
+    this.logger.log(obj);
+    this.logger.log(startDate, endDate);
     return result;
   }
 

@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Query,
+  Logger,
 } from '@nestjs/common';
 import { WellsService } from './wells.service';
 import { CreateWellDto } from './dto/create-well.dto';
@@ -16,6 +17,7 @@ import { ApiTags } from '@nestjs/swagger';
 @Controller('wells')
 export class WellsController {
   constructor(private readonly wellsService: WellsService) {}
+  private logger = new Logger('WellsController');
 
   @Post()
   /**
@@ -81,8 +83,14 @@ export class WellsController {
    * @param well - The ID of the well for which to generate the report.
    * @returns An array of records containing the daily report data for the specified well.
    */
-  getDailyReport(@Param('well') well: number) {
-    return this.wellsService.getDailyReport(+well);
+  getDailyReport(
+    @Param('well') well: number,
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string,
+  ) {
+    const parsedStartDate = startDate ? new Date(startDate) : undefined;
+    const parsedEndDate = endDate ? new Date(endDate) : undefined;
+    return this.wellsService.getDailyReport(+well, parsedStartDate, parsedEndDate);
   }
 
   @Get('counts')
@@ -129,7 +137,7 @@ export class WellsController {
   ) {
     const parsedStartDate = startDate ? new Date(startDate) : undefined;
     const parsedEndDate = endDate ? new Date(endDate) : undefined;
-
+    this.logger.log(parsedStartDate, parsedEndDate);
     return this.wellsService.getDailyDebit(
       +well,
       parsedStartDate,
