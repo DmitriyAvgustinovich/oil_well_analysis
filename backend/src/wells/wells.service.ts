@@ -81,7 +81,8 @@ export class WellsService {
     return result.map((item) => ({
       well: item.well,
       value: item._sum.debit / item._sum[field],
-    }));
+    }))
+    .sort((item1, item2) => item2.value - item1.value, ).slice(0, 10);
   }
   /**
    * Retrieves the count of records for each well.
