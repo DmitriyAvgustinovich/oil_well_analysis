@@ -55,6 +55,7 @@ model well {
   mest               Int
   well_day_histories well_day_histories[]
   well_day_plans     well_day_plans[]
+  well_notifications notifications[]
 }
 
 model well_day_histories {
@@ -79,4 +80,18 @@ model well_day_plans {
   pump_operating Float
 
   @@id([well, date_fact])
+}
+
+enum notification_type {
+  plan_failure
+  potential_break_warning
+  report_ready
+}
+
+model notifications {
+  id      Int               @id @default(autoincrement())
+  type    notification_type
+  text    String
+  well    well              @relation(fields: [well_id], references: [well])
+  well_id Int
 }
