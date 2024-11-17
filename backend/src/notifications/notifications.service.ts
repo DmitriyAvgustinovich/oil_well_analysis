@@ -16,7 +16,7 @@ export class NotificationsService {
 
   findOne(id: number) {
     try {
-      return this.prisma.notifications.findUnique({ where: { id } });
+      return this.prisma.notifications.findUnique({ where: { id: id } });
     } catch (error) {
       return null;
     }
