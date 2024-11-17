@@ -13,15 +13,16 @@ enum Role {
 }
 
 model users {
-  id        Int     @id @default(autoincrement())
-  email     String  @unique
-  hash      String
-  salt      String
-  surname   String
-  name      String
-  lastname  String
-  avatarUrl String?
-  role      Role    @default(user)
+  id            Int             @id @default(autoincrement())
+  email         String          @unique
+  hash          String
+  salt          String
+  surname       String
+  name          String
+  lastname      String
+  avatarUrl     String?
+  role          Role            @default(user)
+  notifications notifications[]
 }
 
 model objects {
@@ -93,6 +94,8 @@ model notifications {
   type    notification_type
   text    String
   well    well              @relation(fields: [well_id], references: [well])
+  user    users             @relation(fields: [user_id], references: [id])
   is_read Boolean
   well_id Int
+  user_id Int
 }
