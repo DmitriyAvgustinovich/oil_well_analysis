@@ -14,7 +14,7 @@ export class UpdateNotificationDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
-  wall_id: number
+  well_id: number
 
   @ApiProperty()
   @IsNotEmpty()
