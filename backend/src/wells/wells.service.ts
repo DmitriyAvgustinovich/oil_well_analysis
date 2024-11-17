@@ -1,7 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../utils/db/prisma.service'; // Сервис Prisma
 import { Well } from './entities/well.entity';
-import { CreateWellDateDto, CreateWellStringDto } from './dto/create-well.dto';
+import {
+  CreatePlanDto,
+  CreateWellDateDto,
+  CreateWellStringDto,
+} from './dto/create-well.dto';
+import { notification_type } from '@prisma/client';
 
 @Injectable()
 export class WellsService {
@@ -179,21 +184,30 @@ export class WellsService {
   }
 
   async createWellDayHistory(createWellDto: CreateWellDateDto) {
-    const savedHistory = await this.prisma.well_day_histories.create({
-      data: createWellDto,
-    });
+    let savedHistory;
+    let message = 'No planned debit found.';
+
+    try {
+      savedHistory = await this.prisma.well_day_histories.create({
+        data: createWellDto,
+      });
+    } catch (error) {
+      console.error('Error creating well_day_histories:', error);
+      return {
+        message: 'Failed to create history.',
+      };
+    }
 
     const plannedDebit = await this.prisma.well_day_plans.findFirst({
       where: {
         well: createWellDto.well,
-        date_fact: createWellDto.date_fact,
+        date_plan: createWellDto.date_fact,
       },
       select: {
         debit: true,
       },
     });
 
-    let message = 'No planned debit found.';
     if (plannedDebit) {
       if (createWellDto.debit > plannedDebit.debit) {
         message = 'Actual debit exceeds planned debit.';
@@ -201,6 +215,30 @@ export class WellsService {
         message = 'Actual debit is less than planned debit.';
       } else {
         message = 'Actual debit matches planned debit.';
+      }
+    }
+
+    const lastNotification = this.prisma.notifications.findFirst({
+      orderBy: {
+        id: 'desc',
+      },
+      take: 1,
+    });
+
+    if (plannedDebit) {
+      try {
+        await this.prisma.notifications.create({
+          data: {
+            id: (await lastNotification).id + 1,
+            user_id: 1,
+            text: `Скважина не выполняет плановую задачу. План: ${plannedDebit.debit} - факт: ${createWellDto.debit}`,
+            well_id: createWellDto.well,
+            type: notification_type.plan_failure,
+            is_read: false,
+          },
+        });
+      } catch (error) {
+        console.error('Error creating notification:', error);
       }
     }
 

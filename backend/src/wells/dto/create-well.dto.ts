@@ -61,3 +61,34 @@ export class CreateWellDateDto {
   @IsNumber()
   pump_operating: number;
 }
+
+export class CreatePlanDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsInt()
+  well: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  date_plan: Date;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsNumber()
+  debit: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsNumber()
+  ee_consume: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsNumber()
+  expenses: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsNumber()
+  pump_operating: number;
+}
