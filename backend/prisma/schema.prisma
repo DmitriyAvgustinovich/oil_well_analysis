@@ -74,13 +74,13 @@ model well_day_histories {
 model well_day_plans {
   related_well   well     @relation(fields: [well], references: [well])
   well           Int
-  date_fact      DateTime @db.Date
+  date_plan      DateTime @db.Date
   debit          Float
   ee_consume     Float
   expenses       Float
   pump_operating Float
 
-  @@id([well, date_fact])
+  @@id([well, date_plan])
 }
 
 enum notification_type {
