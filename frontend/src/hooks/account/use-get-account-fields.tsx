@@ -1,4 +1,5 @@
 import { Form, Input } from "antd";
+import { IUser } from "types";
 import { getImageUrl } from "utils";
 
 import { UploadButton } from "components/UploadButton/UploadButton";
@@ -8,7 +9,6 @@ import {
   accountFieldsTitles,
 } from "constants/account-constants";
 
-import { IUser } from "types/IUser";
 
 interface IUseGetProfileFieldsArgs {
   authUserData?: IUser;

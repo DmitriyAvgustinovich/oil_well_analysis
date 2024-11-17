@@ -1,4 +1,5 @@
 import { Form, Input } from "antd";
+import { IUser } from "types";
 
 import { UploadButton } from "components/UploadButton/UploadButton";
 
@@ -11,7 +12,6 @@ import {
 } from "constants/auth-list-fields";
 import { DEFAULT_VALIDATE_MESSAGE } from "constants/general-constants";
 
-import { IUser } from "types/IUser";
 
 interface IUseGetAuthFieldsArgs {
   formValues?: IUser;

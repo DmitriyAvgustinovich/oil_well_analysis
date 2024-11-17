@@ -9,6 +9,8 @@ import { JwtService } from '@nestjs/jwt';
 import { ImagesModule } from './images/images.module';
 import { WellsModule } from './wells/wells.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { OilForecastModule } from './oil_forecast/oil_forecast.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
@@ -17,6 +19,7 @@ import { NotificationsModule } from './notifications/notifications.module';
     ImagesModule,
     WellsModule,
     NotificationsModule,
+    OilForecastModule,
   ],
   controllers: [],
   providers: [PrismaService, PasswordService, CookieService, JwtService],
