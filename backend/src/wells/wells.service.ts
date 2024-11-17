@@ -1,10 +1,9 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../utils/db/prisma.service'; // Сервис Prisma
 import { Well } from './entities/well.entity';
 
 @Injectable()
 export class WellsService {
-  private readonly logger = new Logger('TEST');
   constructor(private readonly prisma: PrismaService) {}
 
   /**
@@ -119,7 +118,6 @@ export class WellsService {
       ),
     };
     const result = await this.prisma.well_day_histories.aggregate(obj as any);
-    this.logger.log(result);
     return result._sum.debit || 0;
   }
 
@@ -165,8 +163,6 @@ export class WellsService {
       ),
     };
     const result = await this.prisma.well_day_histories.findMany(obj);
-    this.logger.log(obj);
-    this.logger.log(startDate, endDate);
     return result;
   }
 
