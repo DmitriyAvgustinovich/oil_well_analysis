@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../utils/db/prisma.service'; // Сервис Prisma
 import { Well } from './entities/well.entity';
+import { CreateWellDateDto, CreateWellStringDto } from './dto/create-well.dto';
 
 @Injectable()
 export class WellsService {
@@ -175,5 +176,37 @@ export class WellsService {
     }
 
     return object;
+  }
+
+  async createWellDayHistory(createWellDto: CreateWellDateDto) {
+    const savedHistory = await this.prisma.well_day_histories.create({
+      data: createWellDto,
+    });
+
+    const plannedDebit = await this.prisma.well_day_plans.findFirst({
+      where: {
+        well: createWellDto.well,
+        date_fact: createWellDto.date_fact,
+      },
+      select: {
+        debit: true,
+      },
+    });
+
+    let message = 'No planned debit found.';
+    if (plannedDebit) {
+      if (createWellDto.debit > plannedDebit.debit) {
+        message = 'Actual debit exceeds planned debit.';
+      } else if (createWellDto.debit < plannedDebit.debit) {
+        message = 'Actual debit is less than planned debit.';
+      } else {
+        message = 'Actual debit matches planned debit.';
+      }
+    }
+
+    return {
+      savedHistory,
+      message,
+    };
   }
 }

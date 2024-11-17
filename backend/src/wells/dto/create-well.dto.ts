@@ -1,15 +1,44 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsNotEmpty, IsInt, IsDate } from 'class-validator';
+import { IsNumber, IsNotEmpty, IsInt } from 'class-validator';
 
-export class CreateWellDto {
+export class CreateWellStringDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsInt()
+  well: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  date_fact: string;
+
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
-  related_well: number;
+  debit: number;
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsDate()
+  @IsNumber()
+  ee_consume: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsNumber()
+  expenses: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsNumber()
+  pump_operating: number;
+}
+export class CreateWellDateDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsInt()
+  well: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
   date_fact: Date;
 
   @ApiProperty()
@@ -31,9 +60,4 @@ export class CreateWellDto {
   @IsNotEmpty()
   @IsNumber()
   pump_operating: number;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsInt()
-  well: number;
 }

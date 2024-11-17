@@ -8,7 +8,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { WellsService } from './wells.service';
-import { CreateWellDto } from './dto/create-well.dto';
+import { CreateWellDateDto, CreateWellStringDto } from './dto/create-well.dto';
 import { UpdateWellDto } from './dto/update-well.dto';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -17,14 +17,22 @@ import { ApiTags } from '@nestjs/swagger';
 export class WellsController {
   constructor(private readonly wellsService: WellsService) {}
 
-  @Post()
+  // @Post()
   /**
    * Create a new well
    * @param createWellDto - data of the well to create
    * @returns created well
    */
-  create(@Body() createWellDto: CreateWellDto) {
-    return this.wellsService.create(createWellDto);
+  // create(@Body() createWellDto: CreateWellDto) {
+  //   return this.wellsService.create(createWellDto);
+  // }
+  @Post()
+  async createWellDayHistory(@Body() createWellDto: CreateWellStringDto) {
+    const dateDto = {
+      ...createWellDto,
+      date_fact: new Date(createWellDto.date_fact),
+    };
+    return this.wellsService.createWellDayHistory(dateDto);
   }
 
   @Get()
