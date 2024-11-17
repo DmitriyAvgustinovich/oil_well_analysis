@@ -1,4 +1,4 @@
-import { IUser } from "types/IUser";
+import { IUser } from "types";
 
 export type TSignUpResponse = IUser;
 export type TSignUpRequest = Omit<IUser, "id">;

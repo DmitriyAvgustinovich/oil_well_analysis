@@ -6,12 +6,11 @@ import {
   useGetAuthUser,
   useGetQueryMessages,
 } from "hooks";
+import { IUser } from "types";
 
 import { EditOutlined } from "@ant-design/icons";
 
 import { useUpdateUserMutation } from "store/api/users/users-api";
-
-import { IUser } from "types/IUser";
 
 import styles from "./Account.module.scss";
 
@@ -76,7 +75,7 @@ export const Account = () => {
 
   return (
     <>
-      <Typography.Title>Ваш аккаунт</Typography.Title>
+      <Typography.Title>Аккаунт</Typography.Title>
 
       {isUserDataLoading ? (
         <Spin size="large" />

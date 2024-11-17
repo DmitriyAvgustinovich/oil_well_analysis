@@ -1,10 +1,11 @@
-import React, { useEffect, useRef } from "react";
-import { YMaps, Map } from "@pbe/react-yandex-maps";
+import React from "react";
+
+import { YMaps } from "@pbe/react-yandex-maps";
 
 export const OilWellsGraph = () => {
-  const mapRef = useRef<any>(null);
+  const mapRef = React.useRef<any>(null);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const initMap = async () => {
       if (!window.ymaps) return;
 

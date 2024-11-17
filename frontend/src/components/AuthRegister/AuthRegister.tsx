@@ -4,13 +4,12 @@ import { Button, Form } from "antd";
 import { useContexts, useGetAuthFields, useGetQueryMessages } from "hooks";
 import { ValidateErrorEntity } from "rc-field-form/lib/interface";
 import { useNavigate } from "react-router-dom";
+import { IUser } from "types";
 import { getValidateErrorMessage } from "utils";
 
 import { useSignUpMutation } from "store/api/auth/auth-api";
 
 import { RouterPath } from "configs/route-config";
-
-import { IUser } from "types/IUser";
 
 import styles from "./AuthRegister.module.scss";
 

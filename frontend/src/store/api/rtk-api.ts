@@ -6,6 +6,6 @@ export const rtkApi = createApi({
     baseUrl: import.meta.env.VITE_BASE_URL,
     credentials: "include",
   }),
-  tagTypes: ["Auth", "Users"],
+  tagTypes: ["Auth", "Users", "Wells", "Notifications"],
   endpoints: () => ({}),
 });
