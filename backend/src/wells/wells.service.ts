@@ -112,8 +112,12 @@ export class WellsService {
     const whereCondition: any = { well: wellId };
     const obj = {
       _sum: { debit: true },
-      where: await WellsService.mixInWhereClause(whereCondition, startDate, endDate),
-    }
+      where: await WellsService.mixInWhereClause(
+        whereCondition,
+        startDate,
+        endDate,
+      ),
+    };
     const result = await this.prisma.well_day_histories.aggregate(obj as any);
     this.logger.log(result);
     return result._sum.debit || 0;
@@ -135,7 +139,11 @@ export class WellsService {
         date_fact: true,
         debit: true,
       },
-      where: await WellsService.mixInWhereClause(whereCondition, startDate, endDate),
+      where: await WellsService.mixInWhereClause(
+        whereCondition,
+        startDate,
+        endDate,
+      ),
     });
 
     return result;
@@ -150,7 +158,11 @@ export class WellsService {
   async getDailyReport(wellId: number, startDate?: Date, endDate?: Date) {
     const whereCondition: any = { well: wellId };
     const obj = {
-      where: await WellsService.mixInWhereClause(whereCondition, startDate, endDate),
+      where: await WellsService.mixInWhereClause(
+        whereCondition,
+        startDate,
+        endDate,
+      ),
     };
     const result = await this.prisma.well_day_histories.findMany(obj);
     this.logger.log(obj);

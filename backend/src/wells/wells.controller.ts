@@ -90,7 +90,11 @@ export class WellsController {
   ) {
     const parsedStartDate = startDate ? new Date(startDate) : undefined;
     const parsedEndDate = endDate ? new Date(endDate) : undefined;
-    return this.wellsService.getDailyReport(+well, parsedStartDate, parsedEndDate);
+    return this.wellsService.getDailyReport(
+      +well,
+      parsedStartDate,
+      parsedEndDate,
+    );
   }
 
   @Get('counts')

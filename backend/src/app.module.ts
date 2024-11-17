@@ -8,6 +8,7 @@ import { CookieService } from './utils/cookie/cookie.service';
 import { JwtService } from '@nestjs/jwt';
 import { ImagesModule } from './images/images.module';
 import { WellsModule } from './wells/wells.module';
+import { NotificationsModule } from './notifications/notifications.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
@@ -15,6 +16,7 @@ import { WellsModule } from './wells/wells.module';
     AuthModule,
     ImagesModule,
     WellsModule,
+    NotificationsModule,
   ],
   controllers: [],
   providers: [PrismaService, PasswordService, CookieService, JwtService],
