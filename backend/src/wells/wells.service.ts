@@ -231,7 +231,7 @@ export class WellsService {
           data: {
             id: (await lastNotification).id + 1,
             user_id: 1,
-            text: `Скважина не выполняет плановую задачу. План: ${plannedDebit.debit} - факт: ${createWellDto.debit}`,
+            text: `Скважина ${createWellDto.well} не выполняет плановую задачу. План: ${plannedDebit.debit} - факт: ${createWellDto.debit}`,
             well_id: createWellDto.well,
             type: notification_type.plan_failure,
             is_read: false,
