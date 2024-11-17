@@ -10,6 +10,7 @@ import {
 import { NotificationsService } from './notifications.service';
 import { CreateNotificationDto } from './dto/create-notification.dto';
 import { UpdateNotificationDto } from './dto/update-notification.dto';
+import { User } from 'src/utils/users/user.decorator';
 
 @Controller('notifications')
 export class NotificationsController {
@@ -31,16 +32,13 @@ export class NotificationsController {
   }
 
   @Get('unread')
-  findOneByIsRead(@Param('is_read') is_read: boolean) {
-    return this.notificationsService.findOneByIsRead(is_read);
+  findOneByIsRead(@User() userId: string) {
+    return this.notificationsService.findByUserUnread(+userId);
   }
 
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateNotificationDto: UpdateNotificationDto,
-  ) {
-    return this.notificationsService.update(+id, updateNotificationDto);
+  @Post(':id/mark-as-read')
+  markAsRead(@Param('id') id: string) {
+    return this.notificationsService.markAsRead(+id);
   }
 
   @Delete(':id')

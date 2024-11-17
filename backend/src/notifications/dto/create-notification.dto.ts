@@ -9,15 +9,15 @@ export class CreateNotificationDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  type: string
+  type: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
-  wall_id: number
+  well_id: number;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
-  user_id: number
+  user_id: number;
 }
