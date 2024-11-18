@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { Upload, Button, message } from "antd";
 
 import { UploadOutlined } from "@ant-design/icons";
@@ -7,15 +9,22 @@ interface IUploadCsvButtonProps {
 }
 
 export const UploadCsvButton = ({ onSuccess }: IUploadCsvButtonProps) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleUpload = async (file: File) => {
     const formData = new FormData();
     formData.append("file", file);
 
+    setIsLoading(true);
+
     try {
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/oil-forecast/upload`, {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/oil-forecast/upload`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
       if (!response.ok) {
         throw new Error("File upload failed");
@@ -25,6 +34,8 @@ export const UploadCsvButton = ({ onSuccess }: IUploadCsvButtonProps) => {
       if (onSuccess) onSuccess(result.forecast);
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -45,7 +56,7 @@ export const UploadCsvButton = ({ onSuccess }: IUploadCsvButtonProps) => {
 
   return (
     <Upload {...uploadProps}>
-      <Button type="primary" icon={<UploadOutlined />}>
+      <Button type="primary" icon={<UploadOutlined />} loading={isLoading}>
         Загрузить CSV
       </Button>
     </Upload>
